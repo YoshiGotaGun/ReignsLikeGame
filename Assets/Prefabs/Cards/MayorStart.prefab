@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 4740819846587811778}
   - component: {fileID: 2811886979755254641}
   m_Layer: 0
-  m_Name: SolarEnergyInitiative
+  m_Name: MayorStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,18 +637,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cabb9582be0a6a84595965e994bfa00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarioText: cientists propose a city-wide solar panel initiative to reduce carbon
-    emissions, but it requires a significant upfront investment that may strain the
-    budget. Do you accept the solar panel initiative to reduce emissions, or decline
-    due to budget concerns?
-  scenarioImage: {fileID: 21300000, guid: 781ce18b2aac6d848bc96cef6a351a3c, type: 3}
-  acceptHappiness: 8
-  acceptWealth: -12
-  acceptPopulation: 2
-  acceptEnvironment: 15
-  declineHappiness: -4
-  declineWealth: 5
+  scenarioText: "Congratulations! You\u2019ve been offered the position of Mayor
+    in Greensvale, a town full of potential and challenges. As mayor, you\u2019ll
+    manage resources and make decisions that affect the town\u2019s happiness, wealth,
+    population, and environment. The future of Greensvale is in your hands. Do you
+    accept the responsibility, or decline the opportunity?"
+  scenarioImage: {fileID: 21300000, guid: c9ff237bf3908144e8b9a3e836f93558, type: 3}
+  acceptHappiness: 0
+  acceptWealth: 0
+  acceptPopulation: 0
+  acceptEnvironment: 0
+  declineHappiness: 0
+  declineWealth: 0
   declinePopulation: 0
-  declineEnvironment: -10
+  declineEnvironment: 0
   scenarioTextUI: {fileID: 5886720215693378172}
   scenarioImageUI: {fileID: 3735432354765426385}
