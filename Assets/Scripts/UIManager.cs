@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class InputManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public Button acceptButton;
     public Button declineButton;
@@ -18,28 +18,30 @@ public class InputManager : MonoBehaviour
     // List to track available prefabs that haven't been used yet
     private List<GameObject> availablePrefabs = new List<GameObject>();
 
+    // Special end card to display
+    public GameObject endCardPrefab;
+
+    // Flag to check if the game is over
+    private bool isGameOver = false;
+
     void Start()
     {
-        // Initialize availablePrefabs with all prefabs from cardPrefabs array
         availablePrefabs.AddRange(cardPrefabs);
 
-        // Listen for button clicks
         acceptButton.onClick.AddListener(OnAccept);
         declineButton.onClick.AddListener(OnDecline);
 
-        // Setup the current card's UI
         if (currentCard != null)
         {
-            currentCard.SetupCard(); // This updates the text and image of the card
+            currentCard.SetupCard();
         }
     }
 
-    // Handle Accept button click
     void OnAccept()
     {
-        Debug.Log("Accepted Choice");
+        if (isGameOver) return;
 
-        // Apply the resource effects for the "Accept" choice via the GameManager
+        Debug.Log("Accepted Choice");
         if (currentCard != null)
         {
             GameManager.instance.ApplyResourceChanges(
@@ -50,63 +52,83 @@ public class InputManager : MonoBehaviour
             );
         }
 
-        // Update the UI after applying the effects
         UpdateUI();
     }
 
-    // Handle Decline button click
     void OnDecline()
     {
+        if (isGameOver) return;
+
         Debug.Log("Declined Choice");
 
-        // Apply the resource effects for the "Decline" choice via the GameManager
-        if (currentCard != null)
+        if (currentCard != null && currentCard.gameObject.name == "MayorStart")
         {
-            GameManager.instance.ApplyResourceChanges(
-                currentCard.declineHappiness,
-                currentCard.declineWealth,
-                currentCard.declinePopulation,
-                currentCard.declineEnvironment
-            );
+            DisplayEndCard();
         }
+        else
+        {
+            if (currentCard != null)
+            {
+                GameManager.instance.ApplyResourceChanges(
+                    currentCard.declineHappiness,
+                    currentCard.declineWealth,
+                    currentCard.declinePopulation,
+                    currentCard.declineEnvironment
+                );
+            }
 
-        // Update the UI after applying the effects
-        UpdateUI();
+            UpdateUI();
+        }
     }
 
-    // Update any UI elements and randomly switch between different card prefabs
+    public void DisplayEndCard()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+        Debug.Log("Game Over! Displaying End Card.");
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        GameObject endCard = Instantiate(endCardPrefab, transform.position, Quaternion.identity);
+        endCard.transform.SetParent(transform, false);
+        currentCard = endCard.GetComponent<CardValue>();
+
+        if (currentCard != null)
+        {
+            currentCard.SetupCard();
+        }
+    }
+
     private void UpdateUI()
     {
-        // Refill availablePrefabs if it’s empty
+        if (isGameOver) return;
+
         if (availablePrefabs.Count == 0)
         {
             availablePrefabs.AddRange(cardPrefabs);
         }
 
-        // Select a random prefab from the available prefabs list
         int randomIndex = Random.Range(0, availablePrefabs.Count);
         GameObject selectedPrefab = availablePrefabs[randomIndex];
 
-        // Destroy the current card or UI (if needed)
         foreach (Transform child in transform)
         {
-            Destroy(child.gameObject); // This destroys all children (such as the previous card) before instantiating a new one
+            Destroy(child.gameObject);
         }
 
-        // Instantiate the randomly selected prefab
         GameObject selectedCard = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
-        selectedCard.transform.SetParent(transform, false);  // Set it as a child of the current object for proper UI management
+        selectedCard.transform.SetParent(transform, false);
 
-        // Remove the selected prefab from the availablePrefabs list
         availablePrefabs.RemoveAt(randomIndex);
-
-        // Update the currentCard reference to the new card
         currentCard = selectedCard.GetComponent<CardValue>();
 
-        // Call SetupCard to update the UI from the CardValue component if it exists
         if (currentCard != null)
         {
-            currentCard.SetupCard(); // This updates the text and image of the card
+            currentCard.SetupCard();
         }
     }
 }

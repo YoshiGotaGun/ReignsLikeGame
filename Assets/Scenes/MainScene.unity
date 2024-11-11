@@ -1272,6 +1272,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6723707483676401749, guid: 40c619e4dccb05c418dece98a6517d61, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6723707483676401749, guid: 40c619e4dccb05c418dece98a6517d61, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 9214766876700723764, guid: 40c619e4dccb05c418dece98a6517d61, type: 3}
       propertyPath: m_Name
       value: MayorStart
@@ -2994,6 +3002,7 @@ MonoBehaviour:
   - {fileID: 9214766876700723764, guid: 21c492259c1d59a4dbda5b6bc90f22c7, type: 3}
   - {fileID: 9214766876700723764, guid: 95162215ec4a8774595f786c3713a49b, type: 3}
   - {fileID: 9214766876700723764, guid: 5e41817f76e33214482fa08bc0816bd2, type: 3}
+  endCardPrefab: {fileID: 9214766876700723764, guid: cda5ec2d56ceda24390b7a3096a5498c, type: 3}
 --- !u!4 &1545680542
 Transform:
   m_ObjectHideFlags: 0
@@ -3062,6 +3071,7 @@ MonoBehaviour:
   wealthBar: {fileID: 28689655}
   populationBar: {fileID: 1261163926}
   environmentBar: {fileID: 1997296053}
+  uiManager: {fileID: 1545680541}
 --- !u!1 &1581225119
 GameObject:
   m_ObjectHideFlags: 0

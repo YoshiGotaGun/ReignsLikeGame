@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 4740819846587811778}
   - component: {fileID: 2811886979755254641}
   m_Layer: 0
-  m_Name: MayorStart
+  m_Name: ThanksEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,12 +637,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cabb9582be0a6a84595965e994bfa00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarioText: "Congratulations! You\u2019ve been offered the position of Mayor
-    in Greensdale, a town full of potential and challenges. As mayor, you\u2019ll
-    manage resources and make decisions that affect the town\u2019s happiness, wealth,
-    population, and environment. The future of Greensvale is in your hands. Do you
-    accept the responsibility, or decline the opportunity?"
-  scenarioImage: {fileID: 21300000, guid: c9ff237bf3908144e8b9a3e836f93558, type: 3}
+  scenarioText: "Thank you for playing this demo of Greensvale! Your choices shaped
+    the town\u2019s future, but this is just the beginning. Stay tuned for more adventures
+    as Mayor. We appreciate your time and hope you enjoyed managing Greensvale's
+    resources and making impactful decisions. Until next time!"
+  scenarioImage: {fileID: 21300000, guid: b7e441921f7183b46b2a2a9f3ddf16e9, type: 3}
   acceptHappiness: 0
   acceptWealth: 0
   acceptPopulation: 0
