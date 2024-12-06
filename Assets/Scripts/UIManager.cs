@@ -8,6 +8,12 @@ public class UIManager : MonoBehaviour
 {
     public Button acceptButton;
     public Button declineButton;
+    public AudioClip acceptButtonClickSound;
+    public AudioClip declineButtonClickSound;
+    public AudioSource audioSource;
+    public GameObject loadingScreen;
+    public float loadingDuration;
+
 
     // Reference to the CardValue component on the current card
     public CardValue currentCard;
@@ -37,49 +43,61 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void OnAccept()
-    {
-        if (isGameOver) return;
+void OnAccept()
+{
+    if (isGameOver) return;
 
-        Debug.Log("Accepted Choice");
+    // Play the accept button sound
+    if (audioSource != null && acceptButtonClickSound != null)
+    {
+        audioSource.PlayOneShot(acceptButtonClickSound);
+    }
+
+    Debug.Log("Accepted Choice");
+    if (currentCard != null)
+    {
+        GameManager.instance.ApplyResourceChanges(
+            currentCard.acceptHappiness,
+            currentCard.acceptWealth,
+            currentCard.acceptPopulation,
+            currentCard.acceptEnvironment
+        );
+    }
+
+    StartCoroutine(ShowLoadingAndUpdateUI());
+}
+
+void OnDecline()
+{
+    if (isGameOver) return;
+
+    // Play the decline button sound
+    if (audioSource != null && declineButtonClickSound != null)
+    {
+        audioSource.PlayOneShot(declineButtonClickSound);
+    }
+
+    Debug.Log("Declined Choice");
+
+    if (currentCard != null && currentCard.gameObject.name == "MayorStart")
+    {
+        DisplayEndCard();
+    }
+    else
+    {
         if (currentCard != null)
         {
             GameManager.instance.ApplyResourceChanges(
-                currentCard.acceptHappiness,
-                currentCard.acceptWealth,
-                currentCard.acceptPopulation,
-                currentCard.acceptEnvironment
+                currentCard.declineHappiness,
+                currentCard.declineWealth,
+                currentCard.declinePopulation,
+                currentCard.declineEnvironment
             );
         }
 
-        UpdateUI();
+        StartCoroutine(ShowLoadingAndUpdateUI());
     }
-
-    void OnDecline()
-    {
-        if (isGameOver) return;
-
-        Debug.Log("Declined Choice");
-
-        if (currentCard != null && currentCard.gameObject.name == "MayorStart")
-        {
-            DisplayEndCard();
-        }
-        else
-        {
-            if (currentCard != null)
-            {
-                GameManager.instance.ApplyResourceChanges(
-                    currentCard.declineHappiness,
-                    currentCard.declineWealth,
-                    currentCard.declinePopulation,
-                    currentCard.declineEnvironment
-                );
-            }
-
-            UpdateUI();
-        }
-    }
+}
 
     public void DisplayEndCard()
     {
@@ -88,11 +106,13 @@ public class UIManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("Game Over! Displaying End Card.");
 
+        // Destroy the current card or UI (if needed)
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
+        // Instantiate the end card prefab
         GameObject endCard = Instantiate(endCardPrefab, transform.position, Quaternion.identity);
         endCard.transform.SetParent(transform, false);
         currentCard = endCard.GetComponent<CardValue>();
@@ -107,22 +127,29 @@ public class UIManager : MonoBehaviour
     {
         if (isGameOver) return;
 
+        // Check if all cards have been displayed
         if (availablePrefabs.Count == 0)
         {
-            availablePrefabs.AddRange(cardPrefabs);
+            // All cards have been displayed, show the end card
+            DisplayEndCard();
+            return;
         }
 
+        // Select a random prefab from the available prefabs list
         int randomIndex = Random.Range(0, availablePrefabs.Count);
         GameObject selectedPrefab = availablePrefabs[randomIndex];
 
+        // Destroy the current card or UI (if needed)
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
+        // Instantiate the randomly selected prefab
         GameObject selectedCard = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
         selectedCard.transform.SetParent(transform, false);
 
+        // Remove the selected prefab from the availablePrefabs list
         availablePrefabs.RemoveAt(randomIndex);
         currentCard = selectedCard.GetComponent<CardValue>();
 
@@ -131,7 +158,30 @@ public class UIManager : MonoBehaviour
             currentCard.SetupCard();
         }
     }
+        private IEnumerator ShowLoadingAndUpdateUI()
+{
+    if (loadingScreen != null)
+    {
+        
+        loadingScreen.SetActive(true);
+    }
+
+   
+    yield return new WaitForSeconds(loadingDuration);
+
+    
+    if (loadingScreen != null)
+    {
+        loadingScreen.SetActive(false);
+    }
+
+    
+    UpdateUI();
 }
+
+     
+}
+
 
 
 

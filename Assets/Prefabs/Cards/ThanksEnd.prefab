@@ -478,8 +478,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ef09fb36ce336ad4aa85b5ae88369066, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -637,10 +637,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cabb9582be0a6a84595965e994bfa00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarioText: "Thank you for playing this demo of Greensvale! Your choices shaped
-    the town\u2019s future, but this is just the beginning. Stay tuned for more adventures
-    as Mayor. We appreciate your time and hope you enjoyed managing Greensvale's
-    resources and making impactful decisions. Until next time!"
+  scenarioText: "Thank you for playing this demo! Your choices shaped the town\u2019s
+    future, but this is just the beginning. Stay tuned for more adventures as Mayor.
+    We appreciate your time and hope you enjoyed managing Greensvale's resources
+    and making impactful decisions. Until next time!"
   scenarioImage: {fileID: 21300000, guid: b7e441921f7183b46b2a2a9f3ddf16e9, type: 3}
   acceptHappiness: 0
   acceptWealth: 0
